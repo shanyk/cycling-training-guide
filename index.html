@@ -1,0 +1,1161 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Yuankai's Training Guide</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: sticky tab strip over a single reading column; each tab is one section, routed on the URL hash. Power-zone colors tag every ride. */
+:root {
+  --bg: #f4f6f8;
+  --surface: #ffffff;
+  --ink: #161b22;
+  --muted: #56606d;
+  --rule: #d9dee5;
+  --accent: #1f4fd1;
+  --accent-ink: #ffffff;
+  --z-rec: #7a8594;
+  --z2: #1f8a70;
+  --tempo: #c08a00;
+  --thr: #d9661f;
+  --vo2: #c2312f;
+  --chip-bg: color-mix(in srgb, var(--chip) 14%, transparent);
+  --display: "Barlow Condensed", "Arial Narrow", "Roboto Condensed", sans-serif;
+  --body: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #11151b; --surface: #181d25; --ink: #e6e9ee; --muted: #9aa4b1; --rule: #2a313c;
+    --accent: #7ea2ff; --accent-ink: #0d1220;
+    --z-rec: #9aa4b1; --z2: #4cc3a1; --tempo: #e6b630; --thr: #f08a4b; --vo2: #f0605d;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #11151b; --surface: #181d25; --ink: #e6e9ee; --muted: #9aa4b1; --rule: #2a313c;
+  --accent: #7ea2ff; --accent-ink: #0d1220;
+  --z-rec: #9aa4b1; --z2: #4cc3a1; --tempo: #e6b630; --thr: #f08a4b; --vo2: #f0605d;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink);
+  font-family: var(--body); font-size: 17px; line-height: 1.62;
+  -webkit-font-smoothing: antialiased;
+}
+body::before {
+  content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px);
+  z-index: 10; background: var(--surface);
+}
+.wrap {
+  max-width: 1240px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+
+/* Masthead */
+header.mast { background: var(--surface); border-bottom: 1px solid var(--rule); }
+header.mast .wrap { padding-block: 36px 22px; }
+.eyebrow {
+  font-family: var(--display); font-weight: 600; font-size: 14px;
+  letter-spacing: .14em; text-transform: uppercase; color: var(--accent);
+}
+h1 {
+  font-family: var(--display); font-weight: 700; font-size: clamp(40px, 8vw, 64px);
+  line-height: .95; margin: 6px 0 12px; letter-spacing: -.01em; text-wrap: balance;
+}
+.lede { color: var(--muted); margin: 0; max-width: 60ch; }
+
+/* Tabs */
+nav.tabs {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5;
+  background: var(--surface); border-bottom: 1px solid var(--rule);
+}
+/* Tabs wrap onto a second row when the window narrows; on phones they scroll sideways with arrow buttons */
+.tabs-row { position: relative; }
+.tabs-scroll { display: flex; flex-wrap: wrap; gap: 2px 4px; }
+@media (max-width: 600px) {
+  .tabs-scroll { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
+  .tabs-scroll::-webkit-scrollbar { display: none; }
+}
+.tab-arrow {
+  position: absolute; top: 0; bottom: 3px; width: 44px; z-index: 1;
+  display: flex; align-items: center; border: 0; padding: 0; cursor: pointer;
+  font-family: var(--mono); font-size: 22px; line-height: 1; color: var(--accent);
+}
+.tab-arrow.prev { left: 0; justify-content: flex-start; background: linear-gradient(to right, var(--surface) 55%, transparent); }
+.tab-arrow.next { right: 0; justify-content: flex-end; background: linear-gradient(to left, var(--surface) 55%, transparent); }
+.tab-arrow:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.tab-arrow[hidden] { display: none; }
+nav.tabs a {
+  flex: none; padding: 13px 12px 11px; text-decoration: none;
+  font-family: var(--display); font-weight: 600; font-size: 17px; letter-spacing: .02em;
+  color: var(--muted); border-bottom: 3px solid transparent;
+}
+nav.tabs a:hover { color: var(--ink); }
+nav.tabs a[aria-current="page"] { color: var(--ink); border-bottom-color: var(--accent); }
+
+nav.tabs a:focus-visible, .pager a:focus-visible, main a:focus-visible {
+  outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 3px;
+}
+
+/* Content */
+main .wrap { padding-block: 34px 64px; }
+section[data-tab] > h2 {
+  font-family: var(--display); font-weight: 700; font-size: 38px; line-height: 1.05;
+  margin: 0 0 10px; text-wrap: balance;
+}
+h3 {
+  font-family: var(--display); font-weight: 700; font-size: 26px; line-height: 1.1;
+  margin: 42px 0 8px; text-wrap: balance;
+}
+h4 {
+  font-family: var(--display); font-weight: 600; font-size: 19px; letter-spacing: .06em;
+  text-transform: uppercase; color: var(--muted); margin: 30px 0 6px;
+}
+p { margin: 0 0 14px; max-width: 80ch; }
+ul, ol { margin: 0 0 16px; padding-left: 1.3em; max-width: 78ch; }
+li { margin-bottom: 6px; }
+strong { font-weight: 600; }
+main a { color: var(--accent); text-underline-offset: 3px; }
+.intro { font-size: 19px; color: var(--muted); }
+
+.takeaway {
+  font-family: var(--display); font-weight: 600; font-size: 23px; line-height: 1.2;
+  margin: 18px 0 8px; padding: 2px 0 2px 16px; border-left: 4px solid var(--accent);
+  max-width: 34ch; text-wrap: balance;
+}
+
+/* Rules */
+.rule-num {
+  font-family: var(--mono); font-size: 13px; color: var(--accent); letter-spacing: .08em;
+  display: block; margin-top: 44px;
+}
+.rule-num + h3 { margin-top: 2px; }
+.northstar {
+  font-family: var(--display); font-weight: 700; font-size: clamp(30px, 6vw, 44px);
+  line-height: 1.05; margin: 10px 0 18px;
+}
+
+/* Rule index on the start tab */
+.rule-index { list-style: none; padding: 0; margin: 18px 0 8px; display: grid; gap: 0; max-width: none; }
+.rule-index li { margin: 0; border-top: 1px solid var(--rule); }
+.rule-index li:last-child { border-bottom: 1px solid var(--rule); }
+.rule-index a {
+  display: grid; grid-template-columns: 2.4em 1fr; gap: 10px; align-items: baseline;
+  padding: 12px 2px; text-decoration: none; color: var(--ink);
+}
+.rule-index a:hover .ri-title { color: var(--accent); }
+.ri-n { font-family: var(--mono); font-size: 13px; color: var(--muted); }
+.ri-title { font-family: var(--display); font-weight: 600; font-size: 21px; line-height: 1.15; }
+
+/* Comparison of the two blocks */
+.compare { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 18px 0 10px; }
+.compare > div { background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; padding: 16px 18px; min-width: 0; }
+.compare h5 { font-family: var(--display); font-weight: 700; font-size: 20px; margin: 0 0 8px; }
+.compare dl { margin: 0; display: grid; gap: 8px; }
+.compare dt { font-family: var(--display); font-size: 13px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.compare dd { margin: 0; font-size: 15.5px; line-height: 1.45; }
+.compare .base h5 { color: var(--z2); }
+.compare .intensity h5 { color: var(--thr); }
+
+/* FTP chart */
+figure.chart { margin: 20px 0 22px; max-width: 920px; }
+.chart-box { background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; padding: 12px 8px 6px; overflow-x: auto; }
+.chart svg { display: block; width: 100%; min-width: 480px; height: auto; }
+.chart text { font-family: var(--mono); font-size: 11px; fill: var(--muted); }
+.chart .lbl { font-family: var(--display); font-size: 13px; font-weight: 600; letter-spacing: .04em; }
+figcaption { font-size: 14px; color: var(--muted); margin-top: 8px; max-width: 65ch; }
+
+/* Week tables */
+.table-scroll { overflow-x: auto; margin: 14px 0 18px; border: 1px solid var(--rule); border-radius: 8px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: 15.5px; line-height: 1.4; }
+th, td { text-align: left; vertical-align: top; padding: 10px 14px; border-bottom: 1px solid var(--rule); }
+tr:last-child td { border-bottom: 0; }
+th { font-family: var(--display); font-weight: 600; font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+td.day { font-family: var(--display); font-weight: 600; font-size: 17px; white-space: nowrap; }
+td.pct { font-family: var(--mono); font-size: 13.5px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+
+.chip {
+  display: inline-block; font-family: var(--display); font-weight: 600; font-size: 13px;
+  letter-spacing: .06em; text-transform: uppercase; line-height: 1;
+  padding: 5px 8px 4px; border-radius: 4px; white-space: nowrap;
+  color: var(--chip); background: var(--chip-bg); border: 1px solid color-mix(in srgb, var(--chip) 35%, transparent);
+}
+.c-rec { --chip: var(--z-rec); } .c-z2 { --chip: var(--z2); } .c-tempo { --chip: var(--tempo); }
+.c-thr { --chip: var(--thr); } .c-vo2 { --chip: var(--vo2); }
+td .chip { margin-bottom: 4px; }
+td.pct .chip { display: block; width: max-content; }
+
+/* Workout library */
+.lib { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); gap: 14px; margin: 18px 0; }
+.card { background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; padding: 16px 18px; min-width: 0; }
+.card-head { display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: baseline; justify-content: space-between; margin-bottom: 6px; }
+.card h5 { font-family: var(--display); font-weight: 700; font-size: 22px; margin: 0; line-height: 1.1; }
+.card p { font-size: 15.5px; line-height: 1.5; margin-bottom: 8px; }
+.card p:last-child { margin-bottom: 0; }
+.card .chips { display: flex; gap: 6px; flex-wrap: wrap; }
+.watch {
+  display: inline-flex; align-items: center; gap: 6px; margin-top: 4px;
+  font-family: var(--display); font-weight: 600; font-size: 16px; letter-spacing: .02em; text-decoration: none;
+}
+.watch::after { content: "↗"; font-family: var(--mono); font-size: 13px; }
+
+/* Pager */
+.pager { display: flex; justify-content: space-between; gap: 12px; margin-top: 52px; padding-top: 18px; border-top: 1px solid var(--rule); }
+.pager a {
+  display: flex; flex-direction: column; gap: 2px; text-decoration: none; color: var(--ink); max-width: 48%;
+}
+.pager a.next { text-align: right; margin-left: auto; }
+.pager small { font-family: var(--display); font-weight: 600; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.pager span { font-family: var(--display); font-weight: 700; font-size: 20px; color: var(--accent); }
+
+/* Video cards: thumbnail beside a summary on wide screens, stacked on phones */
+.vids { display: grid; gap: 18px; margin: 18px 0; }
+.vid {
+  display: grid; grid-template-columns: minmax(0, 1fr); min-width: 0; overflow: hidden;
+  background: var(--surface); border: 1px solid var(--rule); border-radius: 12px;
+}
+@media (min-width: 720px) { .vid { grid-template-columns: minmax(220px, 300px) minmax(0, 1fr); } }
+.vid-thumb {
+  position: relative; aspect-ratio: 16 / 9; max-width: 100%; align-self: start;
+  display: flex; align-items: flex-end; padding: 12px 14px; text-decoration: none;
+  background: color-mix(in srgb, var(--chip) 20%, var(--surface));
+}
+.vid-topic { font-family: var(--display); font-weight: 700; font-size: 26px; line-height: 1; text-transform: uppercase; color: var(--chip); }
+.vid-play { position: absolute; top: 50%; left: 50%; width: 56px; height: 40px; margin: -24px 0 0 -28px; border-radius: 10px; background: var(--chip); }
+.vid-play::after {
+  content: ""; position: absolute; left: 23px; top: 12px;
+  border-left: 14px solid var(--surface); border-top: 8px solid transparent; border-bottom: 8px solid transparent;
+}
+.vid-body { padding: 14px 18px 16px; min-width: 0; }
+.vid-body h3 { font-size: 21px; margin: 0 0 4px; }
+.vid-body h3 a { color: var(--ink); text-decoration: none; }
+.vid-body h3 a:hover { color: var(--accent); }
+.vid-src { font-family: var(--mono); font-size: 12px; color: var(--muted); margin: 0 0 8px; }
+.vid-note { font-size: 15.5px; margin: 0 0 8px; }
+.vid-label { font-family: var(--display); font-weight: 600; font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin: 10px 0 4px; }
+.vid-points { font-size: 15px; line-height: 1.5; margin: 0; }
+.vid-points li { margin-bottom: 4px; }
+
+ul.sources { font-size: 14.5px; line-height: 1.5; color: var(--muted); }
+ul.sources li { margin-bottom: 8px; }
+
+footer { color: var(--muted); font-size: 13px; }
+footer .wrap { padding-block: 0 40px; }
+
+@media (max-width: 560px) {
+  body { font-size: 16.5px; }
+  .compare { grid-template-columns: 1fr; }
+  section[data-tab] > h2 { font-size: 32px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  section[data-tab]:not([hidden]) { animation: rise .22s ease-out; }
+  @keyframes rise { from { transform: translateY(6px); } to { transform: none; } }
+}
+</style>
+
+<header class="mast">
+  <div class="wrap">
+    <div class="eyebrow">Century build · Long-ride durability</div>
+    <h1>Yuankai's Training Guide</h1>
+    <p class="lede">A working reference for building toward a century and raising long-ride durability on top of the structured TrainerRoad work that's already paying off. Read it in order once, then dip in as needed.</p>
+  </div>
+</header>
+
+<nav class="tabs" aria-label="Guide sections">
+  <div class="wrap">
+  <div class="tabs-row">
+    <button type="button" class="tab-arrow prev" aria-label="Scroll tabs left" hidden>&#8249;</button>
+    <div class="tabs-scroll">
+    <a href="#start">Start here</a>
+    <a href="#rules">The six rules</a>
+    <a href="#method">Methodology</a>
+    <a href="#base">Base block</a>
+    <a href="#intensity">Intensity block</a>
+    <a href="#fueling">Fueling</a>
+    <a href="#science">Science</a>
+    <a href="#workouts">Workouts</a>
+    <a href="#videos">Videos</a>
+    </div>
+    <button type="button" class="tab-arrow next" aria-label="Scroll tabs right" hidden>&#8250;</button>
+  </div>
+  </div>
+</nav>
+
+<main>
+<div class="wrap">
+
+<!-- START -->
+<section data-tab="start" aria-labelledby="h-start">
+  <h2 id="h-start">How to use this guide</h2>
+  <p class="intro">Training here runs in alternating blocks of endurance (about 4 to 6 weeks) and intensity (about 3 to 4 weeks), with the goal of getting stronger gradually across the whole year rather than peaking for one race.</p>
+
+  <p>The guide has eight parts. Read them in order the first time:</p>
+  <ul>
+    <li><strong><a href="#rules">The six rules</a></strong> cover the mindset that keeps you training for years.</li>
+    <li><strong><a href="#method">Methodology</a></strong> explains why the plan is built the way it is.</li>
+    <li><strong><a href="#base">Base block</a></strong> and <strong><a href="#intensity">Intensity block</a></strong> are the practical playbooks, with example weeks.</li>
+    <li><strong><a href="#fueling">Fueling</a></strong> covers what your body burns on the bike and how much to eat on long rides, how fueling fits with managing your weight, and the research behind it.</li>
+    <li><strong><a href="#science">Science</a></strong> covers interesting questions that don't belong to one block, starting with why muscles cramp.</li>
+    <li><strong><a href="#workouts">Workouts</a></strong> collects every session in one place.</li>
+    <li><strong><a href="#videos">Videos</a></strong> gathers the videos worth watching, with a short note on each.</li>
+  </ul>
+
+  <h3>The six rules at a glance</h3>
+  <ol class="rule-index">
+    <li><a href="#rules"><span class="ri-n">01</span><span class="ri-title">Find something that motivates you</span></a></li>
+    <li><a href="#rules"><span class="ri-n">02</span><span class="ri-title">Be honest with yourself</span></a></li>
+    <li><a href="#rules"><span class="ri-n">03</span><span class="ri-title">Consistency wins</span></a></li>
+    <li><a href="#rules"><span class="ri-n">04</span><span class="ri-title">Look back on your training</span></a></li>
+    <li><a href="#rules"><span class="ri-n">05</span><span class="ri-title">Have fun</span></a></li>
+    <li><a href="#rules"><span class="ri-n">06</span><span class="ri-title">The work is done on the bike, the gains are made off it</span></a></li>
+  </ol>
+
+  <h3>Which block are you in right now?</h3>
+  <p>Where you start depends on where you already are in the cycle. Look at your current rides:</p>
+  <div class="compare">
+    <div class="intensity">
+      <h5>Intensity block</h5>
+      <p style="margin:0;font-size:15.5px;line-height:1.45">2 or 3 rides a week are really high-intensity sessions with high normalized power.</p>
+    </div>
+    <div class="base">
+      <h5>Base block</h5>
+      <p style="margin:0;font-size:15.5px;line-height:1.45">You're mostly doing base and tempo riding, with maybe one hard workout a week.</p>
+    </div>
+  </div>
+
+  <nav class="pager" aria-label="Next section"><a class="next" href="#rules"><small>Next</small><span>The six rules</span></a></nav>
+</section>
+
+<!-- RULES -->
+<section data-tab="rules" aria-labelledby="h-rules" hidden>
+  <h2 id="h-rules">The six rules</h2>
+  <p class="intro">The mindset behind everything else. Come back to these when motivation dips or the plan stops making sense.</p>
+
+  <span class="rule-num">RULE 01</span>
+  <h3>Find something that motivates you</h3>
+  <p>You need a north star, something to guide you through your training journey. Think of <em>Inception</em>, where an idea is described as a kind of virus: once it takes hold, you can't really get rid of it. That's what should drive you. It's the thing you keep coming back to, the reason training is worth it. It doesn't have to be logical.</p>
+  <p>For me, it's simply:</p>
+  <p class="northstar">"How strong can I get?"</p>
+  <p>Yours can be just as simple, but it should be something you can't talk yourself out of. When you look back on all this, you'll be glad you tried to get there, and maybe you'll have answered something for yourself along the way.</p>
+
+  <span class="rule-num">RULE 02</span>
+  <h3>Be honest with yourself</h3>
+  <p>You have to be honest with yourself about how you're feeling and where you're at in your training. If you're starting to feel burnout, back off. If the intervals are too hard, maybe your FTP isn't set correctly and you need to lower it a little.</p>
+  <p>Be just as honest about how much time you have to train across your days and weeks. You can't suddenly commit to 12 hours a week when you only have maybe 5 hours to start, or when you have other obligations that week. Be very clear about:</p>
+  <ul>
+    <li>how much you can actually manage,</li>
+    <li>how much you <em>think</em> you can manage, and</li>
+    <li>how you're feeling that day.</li>
+  </ul>
+
+  <span class="rule-num">RULE 03</span>
+  <h3>Consistency wins</h3>
+  <p>Consistency beats any sudden spike in training, and it certainly beats time off the bike. Your goal should be to be as consistent as possible with your time on the bike. That doesn't mean doing a lot. It could be just 5 hours a week, but week after week after week, that all adds up.</p>
+  <p>If you're going to build volume, build it slowly. Your body can't handle a jump from 5 hours to 10 hours a week. That's a physical shock, and it's what leads to burnout and overtraining.</p>
+  <p class="takeaway">Consistency over trying to get there faster. Trust the process. Build consistency.</p>
+
+  <span class="rule-num">RULE 04</span>
+  <h3>Look back on your training</h3>
+  <p>At the end of every workout, ask yourself how difficult it really was and rate it from 1 to 10. This is your RPE (rate of perceived exertion), and Intervals.icu and Strava both let you log it with the ride.</p>
+  <p>Zoom out, too. Look back on the work you've done across the week and across the whole block: how much riding you've done and how long you've been on the bike. After a couple of consistent weeks you might be surprised how quickly the time adds up.</p>
+  <p>Always look back at where you've been and how far you've come. Seeing your progress helps a lot.</p>
+
+  <span class="rule-num">RULE 05</span>
+  <h3>Have fun (perhaps the most important rule)</h3>
+  <p>Find a way to have fun while you're doing this. That could mean putting your head down and just doing the workout, or it could mean watching TV on the trainer.</p>
+  <p>Through the winter you might not be able to ride outside much. It's dark in the evenings, and doing intervals outside in the dark is more dangerous. I'd strongly advise against it. If you're training indoors, find a way to make it fun. At the end of the day, this is supposed to be fun.</p>
+  <p>If you really don't want to do the workout, or you really don't want to be on the bike, those are signs of burnout and overtraining. Back off and take some time off. Then go back to what motivates you from Rule 1:</p>
+  <ul>
+    <li>What's your goal?</li>
+    <li>Why are you trying to get there?</li>
+    <li>How can you make the process more fun?</li>
+  </ul>
+  <p>Riding bikes is supposed to be fun. Being fast is fun. Hanging out with the fast guys and being part of the cool club is fun. Being able to do really long rides is fun. So is getting out there with your friends. And having the fitness to handle a random 100-miler, 120-miler or longer whenever one pops up is a really nice place to be. That's what this should be.</p>
+  <p>Say you've got 2 or 3 hours of Zone 2 endurance, or some other really long workout. Find a way to make it fun. I'll go more in depth on different ideas you can try later in this guide.</p>
+  <p class="takeaway">Fun is the goal, not suffering. Type 2 fun, maybe.</p>
+
+  <span class="rule-num">RULE 06</span>
+  <h3>The work is done on the bike, the gains are made off it</h3>
+  <p>This one may be even more important than having fun.</p>
+  <p><strong>The work is done on the bike, and the gains are made off the bike.</strong> Always, always, always remember that.</p>
+  <p>You can put so much work in on the bike, but if you don't give your body time to recover, adapt and grow from that stress, you aren't making any headway. Stress the body, then let the body adapt. That is the key principle behind all of this training.</p>
+  <p class="takeaway">Recovery is just as important as the work on the bike, and perhaps more important.</p>
+
+  <nav class="pager" aria-label="Previous and next section">
+    <a href="#start"><small>Previous</small><span>Start here</span></a>
+    <a class="next" href="#method"><small>Next</small><span>Methodology</span></a>
+  </nav>
+</section>
+
+<!-- METHOD -->
+<section data-tab="method" aria-labelledby="h-method" hidden>
+  <h2 id="h-method">Methodology</h2>
+  <p class="intro">The ideas the whole plan rests on: how long each block runs and why, why amateurs can train differently from pros, what each block actually changes in your body, and how to recover.</p>
+
+  <h3>The 4–6 week window</h3>
+  <p>The plan runs on a rhythm of blocks that last roughly <strong>4 to 6 weeks</strong>. That's a planning convenience, not a biological deadline. Different adaptations run on different clocks. Mitochondrial enzymes respond within days to a couple of weeks. VO2max, capillaries and the heart's output keep improving for 10–12 weeks or more if the training keeps progressing.</p>
+  <p>What does go stale is a <em>fixed</em> stimulus. Once you've adapted to a workout, repeating it delivers less. So I don't assume the later weeks of a block are wasted, especially when the workouts are still getting harder.</p>
+  <p>The main reason to switch blocks is to manage burnout. Week after week of hard threshold and VO2 work wears you down mentally as much as physically, until you don't want to get on the bike at all. Monotonous training is a known risk factor for overtraining. Rotating between base and intensity spreads the load out: the hard blocks stay short enough to finish with your motivation intact, and the base block lets your body and your head recover while you keep building fitness.</p>
+  <p class="takeaway">Base runs longer: about 4–6 weeks, or 6–8 when you want a bigger build. Intensity stays short: about 3–4 weeks of threshold and VO2.</p>
+
+  <h3>We're not pros, and that's an advantage</h3>
+  <p>We're not pros, and we don't have an intense race season. At most we're racing some crits and time trials. There's nothing on the calendar that's going to spike our stress or that we really need to peak for.</p>
+  <p>The traditional way to set up a yearly schedule is to peak for one or two races a year, so you're at your absolute maximum on those days. This process isn't that. It's about getting stronger gradually, in general.</p>
+  <p>That means we can take a different approach from the structure a proper racing season demands, and that's actually an advantage we have over the pros. Because we aren't beholden to a set number of races, we don't need build and peak phases timed to a date. We can swap between base and intensity blocks as it suits us.</p>
+  <p>That flexibility costs very little. When total training load is matched, studies of trained cyclists find that the order of base and intensity work, or whether it's blocked or mixed, makes little or no difference to performance. What matters most is consistent total load, steady progression and enough recovery.</p>
+  <p>So instead of peaks, think of each intensity block as a step up. Like TrainerRoad's progression, you should notice the work getting more manageable as the block goes on: the intervals get longer or harder, and you can still finish them. That's you getting stronger. Over a year those steps add up to a rising trend, and because there's no long taper for a single day, no training time is spent sharpening instead of building.</p>
+  <p class="takeaway">Instead of peaking for one or two specific days, we aim for a steady upward trend across the whole year.</p>
+
+  <h4>Testing without a taper</h4>
+  <p>At the start of every intensity block, go all out to see how much stronger you've gotten. You're coming off base and a few days off the bike, so you're relatively fresh. You don't need a week of tapering: one or two recovery days, then an opener day with a few short, sharp efforts, is enough. Our volume is much lower than a pro's, so carrying a little fatigue into a max effort is fine, and you'll still put out a real number. Just don't do it the day after a hard workout.</p>
+  <p>Ideally, do the full set every cycle: a <strong>3-minute, 5-minute and 12-minute max</strong>, the critical power test many coaches use, each on a different day so you're fresh for every one. The more often you do it, the more accurately it sets your zones. If you're short on time or not feeling it, a single <strong>5-minute max</strong> is enough to see whether you're progressing. But do the full set at least <strong>twice a year</strong>, and ideally three or four times. Keep everything else the same (time of day, setup and fueling) so the numbers compare from one test to the next. The results update your power curve and set your zones for the block ahead.</p>
+  <p>Base blocks get their own check. Late in a base block, do a 5- to 12-minute max effort at the end of a long ride, after about 2,000 kJ of work. Compare it with your fresh number from the last test. The smaller the drop, the better your durability, which is what base is supposed to build and what a century demands.</p>
+
+  <h3>The two blocks: endurance and intensity</h3>
+  <p>Training is split into two types of block. Each targets different systems and different adaptations: the <strong>aerobic system</strong> (your mitochondria) and the <strong>muscle fibers</strong> themselves.</p>
+
+  <div class="compare">
+    <div class="base">
+      <h5>Endurance (base) block</h5>
+      <dl>
+        <div><dt>Length</dt><dd>About 4–6 weeks; 6–8 is fine when you want a bigger build. Capillaries, blood volume and the heart keep adapting for months, so a longer block still pays off.</dd></div>
+        <div><dt>Mitochondria</dt><dd>Build <strong>more of them</strong>: lower intensity, higher volume, more time on the bike.</dd></div>
+        <div><dt>Muscle fibers</dt><dd>Turn Type IIx fast-twitch fibers into more aerobic Type IIa.</dd></div>
+      </dl>
+    </div>
+    <div class="intensity">
+      <h5>Intensity block</h5>
+      <dl>
+        <div><dt>Length</dt><dd>About 3–4 weeks, kept short to manage burnout, with volume coming down a bit. Research blocks are often 1–4 weeks, and no study shows one length is best.</dd></div>
+        <div><dt>Mitochondria</dt><dd>Raise <strong>aerobic capacity</strong>: how much oxygen you can use at your max.</dd></div>
+        <div><dt>Muscle fibers</dt><dd>Train high-threshold fibers to produce high power and hold it longer.</dd></div>
+      </dl>
+    </div>
+  </div>
+
+  <p>Switch between the two blocks regularly instead of staying in one for months. A long stretch of the same work goes stale for your body, and it wears on your head too. Hard blocks burn you out, and endless base gets hard to stay focused on. Changing the emphasis every month or so keeps you physically progressing and mentally engaged.</p>
+  <p>Treat these block lengths as a working theory. No study has compared 4-, 6- and 8-week blocks head to head. The lengths here are extrapolated from how the research studies were run and how long their adaptations took, then shaped into blocks you can keep up for years.</p>
+
+  <h4>The aerobic system: mitochondria</h4>
+  <p>Mitochondria are where your muscles use oxygen to make energy. As a rule of thumb, volume mostly drives how many you build, and hard work near your max mostly drives your <strong>aerobic capacity</strong>: how much oxygen your body can use at its limit. "Mostly" matters here. Intervals add mitochondria too, high volume raises capacity too, and the gains fade within a couple of weeks if volume drops sharply.</p>
+  <p>That's how the two blocks split the work. Base leans on volume, so it builds the most mitochondria. Intensity leans on hard efforts, so it raises your aerobic ceiling. Each block keeps some of the other (hard sessions in base, real endurance riding in intensity), so neither side fades.</p>
+  <p>Most of this research comes from untrained people over a few weeks. Once you're trained, mitochondria change slowly in any block, and much of what intensity adds comes from the heart, the blood, and the muscle's tolerance of acid.</p>
+  <p class="takeaway">You build mitochondria in every block, and base builds the most. Intensity raises your aerobic ceiling.</p>
+
+  <h4>The muscle fibers</h4>
+  <p><strong>Endurance block.</strong> A lot of base work is about making your fast-twitch fibers more aerobic. The classic evidence is a 1974 study by Gollnick, Piehl and Saltin, who took muscle samples during prolonged cycling to see which fibers were running out of fuel. Slow-twitch (Type I) fibers used up their glycogen first. As the ride went on, fast-twitch fibers were drawn in and emptied progressively. Long rides are what put your fast-twitch fibers to work aerobically, and that's the stimulus they adapt to. The longer and harder the ride, the more of them get involved, and some lower-cadence, higher-torque riding helps too.</p>
+  <p>The goal is to turn your <strong>Type IIx</strong> fibers, the most powerful but quickest to tire, into <strong>Type IIa</strong>: fast-twitch fibers that are far more aerobic and fatigue-resistant. That shift is well established and happens over weeks to months of training. Along the way those fibers gain a lot of mitochondria and capillaries. In one cycling study, mitochondria grew more in IIa fibers (+55%) than in slow-twitch ones (+35%). Fast fibers don't really turn into slow-twitch ones. They stay fast-twitch and become much more aerobic, which is exactly what you want.</p>
+  <p><strong>Intensity block.</strong> Harder efforts recruit a bigger share of your muscle, including the high-threshold fast-twitch fibers that easy riding barely uses. That gives those fibers a stronger stimulus: more oxidative capacity, and better tolerance of acid and the other by-products of hard work. The payoff is what the <a href="#intensity">VO2 max work</a> is for: producing high power and getting used to holding it for longer. Expect a different kind of muscular fatigue than in base. That's the higher-force, higher-recruitment work showing up, and it's hard to describe until you feel it.</p>
+
+  <h4>The nervous system (every block)</h4>
+  <p>Every pedal stroke is your nervous system recruiting muscle fibers, and part of getting fitter is coordination: trained riders recruit more smoothly, with less wasted effort. But for endurance riding, most gains come from the heart, the blood and the muscles themselves. Where the nervous system matters most in this guide is burnout, which the recovery section below covers.</p>
+
+  <h3>The right stress</h3>
+  <p>There's no magic workout. Your body doesn't care what a session is called or which app it came from. What matters is consistently stacking enough of the <em>right</em> stress across a block.</p>
+  <p>But the right stress is more specific than minutes in a zone. A ride can rack up plenty of time in zone while the power is all over the place, and that's not the same stimulus as a steady effort. Your body does know the difference between holding a power for 5 minutes and hitting the same power in short bursts with long rests, where your heart rate and breathing drop back down in between. How you ride an effort decides how long you actually spend near your ceiling.</p>
+  <p>So be intentional. Pick an interval length and hold the power for the whole thing. This works outside too. You don't need 5×5s on a trainer: pick a route with 3–5 minute climbs and ride each one hard from bottom to top. Don't go hard at the bottom, ease off in the middle and kick at the top. The full effort is the workout.</p>
+  <p>Short intervals aren't worse, just different. 30-15s work because the rests are short, so you stay near your ceiling the whole set. In several cyclist studies they gave bigger VO2 max gains than 5-minute reps. The same rule applies: ride every rep fully.</p>
+  <p>Time in zone and TSS are still useful for tracking overall load. They just can't tell you whether the efforts were the right ones.</p>
+  <p class="takeaway">Pick the effort, then ride all of it.</p>
+  <p>That's another way to look at the two blocks. Each one is simply a different way of stressing the body.</p>
+
+  <h3>Recovery</h3>
+  <p>Training is only half of it. You adapt while you recover, so recovery gets the same planning as the workouts. For easy days within a block, see <a href="#base">Managing recovery</a> in the base block.</p>
+
+  <h4>Time off the bike</h4>
+  <p>Riding day after day with no real break wears you down, even when some of those days are only recovery rides. Every so often you need time completely off the bike. Your brain gets tired of this stuff, and that fatigue is part physical, part mental. "Resetting the nervous system" is shorthand, since researchers still debate where this kind of fatigue sits, but the fix is the same: rest.</p>
+  <ul>
+    <li><strong>Between blocks:</strong> take 3–4 days completely off the bike and do something else. After each full cycle of base and intensity, lean toward the longer end. For the volume we ride, more than about 4 days is rarely needed, though some people find they want closer to a week. It's your call.</li>
+    <li><strong>What you're looking for:</strong> a change in how you feel about the bike. You're no longer dreading it or feeling flat, there's little fatigue left, and you want to ride again. That's your signal to start the next block.</li>
+    <li><strong>Trust your mood:</strong> how you feel is one of the best warning signs you have. A review of 56 studies found that athletes' self-reported mood and stress tracked changes in training load more sensitively and consistently than blood markers or heart-rate measures.</li>
+    <li><strong>If it doesn't come back:</strong> if a few days off don't restore your power and your mood, it's more than normal fatigue. Cut the load for 1–2 weeks, and check for illness, under-eating and life stress. It's better to back off early than to dig a hole and climb out.</li>
+  </ul>
+  <p class="takeaway">The point of time off is to come back wanting to ride.</p>
+
+  <h4>Life stress counts too</h4>
+  <p>Your body doesn't keep separate accounts for training and life. A hard week at work, bad sleep or under-eating comes out of the same recovery budget, so the same training load hits harder that week. Studies have linked high life stress to smaller fitness gains and slower recovery. Plan lighter weeks around busy periods you can see coming, and when life stress spikes, drop intensity before volume.</p>
+
+  <h3>How the blocks play out: tracking progress</h3>
+  <p>Getting stronger is the goal, but measuring it is harder than it looks. A single test varies from day to day by about as much as the change you'd expect from one block, so one test can't tell you whether a block worked.</p>
+  <p>Expect power to rise across an intensity block, with bigger jumps early on and smaller ones as you get more trained. Through base it should hold roughly steady if you keep a little intensity in, so a dip isn't guaranteed. The big jumps from your first year of structured training don't repeat, and that's normal. What matters is that the <strong>overall trend keeps rising</strong>.</p>
+
+  <h4>How to track it</h4>
+  <ul>
+    <li><strong>Test every cycle.</strong> Ideally that's the full 3-, 5- and 12-minute set at the start of each intensity block (see <em>Testing without a taper</em> above). If time is short, do at least the 5-minute max, but do the full set at least twice a year, ideally three or four times. The more full tests you do, the more accurate your zones. Compare each result with the same test from the last cycle.</li>
+    <li><strong>Let Intervals.icu do the math.</strong> Its estimated FTP can come from a critical power model (Morton's) fitted to your recent power curve. Use that number for your zones. The model fits your whole curve, not one effort, so it's most accurate when the curve has fresh max efforts at more than one length. A 5-minute max on its own tracks your top end well; add the 3- or 12-minute when you want the critical power estimate to be solid.</li>
+    <li><strong>Between tests, watch the workouts.</strong> If you can add an interval, or stretch the intervals longer at the same power, you're getting stronger. It's a good sign, though not a precise measure.</li>
+    <li><strong>Give base its own measure.</strong> FTP can't see durability. Use the late-base long-ride test above, and watch heart-rate drift (decoupling) on a steady 2–3 hour ride. Base blocks should show progress there even when FTP is flat.</li>
+  </ul>
+
+  <figure class="chart">
+    <div class="chart-box">
+      <svg viewBox="0 0 640 250" role="img" aria-label="Illustrative FTP over three cycles: rising in each intensity block, dipping slightly in each base block, with an overall upward trend.">
+        <g stroke="var(--rule)" stroke-width="1">
+          <line x1="60" y1="155" x2="610" y2="155"/>
+          <line x1="60" y1="110" x2="610" y2="110"/>
+          <line x1="60" y1="65" x2="610" y2="65"/>
+          <line x1="60" y1="20" x2="610" y2="20"/>
+        </g>
+        <g text-anchor="end">
+          <text x="52" y="24">Power</text>
+        </g>
+        <line x1="60" y1="150.5" x2="600" y2="58" stroke="var(--muted)" stroke-width="1.5" stroke-dasharray="5 5" fill="none"/>
+        <text x="604" y="52" text-anchor="end">overall trend</text>
+        <g fill="none" stroke-width="3.5" stroke-linecap="round">
+          <line x1="60" y1="155" x2="150" y2="98.75" stroke="var(--thr)"/>
+          <line x1="150" y1="98.75" x2="240" y2="128" stroke="var(--z2)"/>
+          <line x1="240" y1="128" x2="330" y2="69.5" stroke="var(--thr)"/>
+          <line x1="330" y1="69.5" x2="420" y2="98.75" stroke="var(--z2)"/>
+          <line x1="420" y1="98.75" x2="510" y2="42.5" stroke="var(--thr)"/>
+          <line x1="510" y1="42.5" x2="600" y2="71.75" stroke="var(--z2)"/>
+        </g>
+        <g fill="var(--surface)" stroke="var(--ink)" stroke-width="2">
+          <circle cx="60" cy="155" r="4"/><circle cx="150" cy="98.75" r="4"/><circle cx="240" cy="128" r="4"/>
+          <circle cx="330" cy="69.5" r="4"/><circle cx="420" cy="98.75" r="4"/><circle cx="510" cy="42.5" r="4"/>
+          <circle cx="600" cy="71.75" r="4"/>
+        </g>
+        <line x1="60" y1="190" x2="600" y2="190" stroke="var(--rule)"/>
+        <g class="lbl" text-anchor="middle">
+          <text x="105" y="208" fill="var(--thr)">Intensity</text>
+          <text x="195" y="208" fill="var(--z2)">Base</text>
+          <text x="285" y="208" fill="var(--thr)">Intensity</text>
+          <text x="375" y="208" fill="var(--z2)">Base</text>
+          <text x="465" y="208" fill="var(--thr)">Intensity</text>
+          <text x="555" y="208" fill="var(--z2)">Base</text>
+        </g>
+        <g text-anchor="middle">
+          <text x="150" y="236">Cycle 1</text>
+          <text x="330" y="236">Cycle 2</text>
+          <text x="510" y="236">Cycle 3</text>
+        </g>
+        <g stroke="var(--rule)"><line x1="240" y1="186" x2="240" y2="240"/><line x1="420" y1="186" x2="420" y2="240"/></g>
+      </svg>
+    </div>
+    <figcaption>Illustrative only. Power rises in each intensity block and holds or dips slightly in each base block, with each cycle of one intensity and one base block taking roughly 2 months. Single tests vary from day to day, so read the trend over several cycles.</figcaption>
+  </figure>
+
+  <p>On a graph, this looks like a <strong>stepwise climb</strong>: up during intensity, flat or slightly down during base, then up again from a higher starting point. That's more sustainable than trying to push FTP up continuously.</p>
+  <p>The goal isn't for every block to be higher than the last. It's for the <strong>overall trend to rise</strong>. Look back after each cycle, and over time you should see the trend moving upward.</p>
+
+  <nav class="pager" aria-label="Previous and next section">
+    <a href="#rules"><small>Previous</small><span>The six rules</span></a>
+    <a class="next" href="#base"><small>Next</small><span>Base block</span></a>
+  </nav>
+</section>
+
+<!-- BASE -->
+<section data-tab="base" aria-labelledby="h-base" hidden>
+  <h2 id="h-base">The base (endurance) block</h2>
+  <p class="intro">High volume, lower intensity. You're stressing the body through duration, not intensity.</p>
+
+  <h3>The hard workouts</h3>
+  <p>Lower intensity doesn't mean no intensity. Aim for <strong>2 hard workouts a week</strong>:</p>
+  <ol>
+    <li><strong>A sprint workout.</strong> Keep one of these throughout the whole base block. It could be an outdoor ride where you're just smashing some climbs. It might end up being VO2 work, but ideally it's a bit harder than that. One good option is a workout built around 1-minute, pretty-much-all-out efforts (<a href="https://www.youtube.com/watch?v=lc6zYdoGZh4" target="_blank" rel="noopener">The Best Science Backed Short Intensity Workout</a>). It's hard to do, but it's great for maintaining fitness. This is how you avoid losing the gains you made in the intensity block.</li>
+    <li><strong>A long tempo workout.</strong> Aim for 1.5–2 hours of tempo, which is pretty hard. If you can't manage a session that long, a sweet spot workout is a good alternative. Keep sweet spot to about an hour, since that's already pretty hard.</li>
+  </ol>
+
+  <h3>Everything else: Zone 2</h3>
+  <p>Fill the rest of the week with the <strong>lower end of Zone 2</strong>. The more volume the better. If you can't fit in the volume, you have to make up for it with some intensity, but keep that intensity capped.</p>
+  <p>Outside the 2 hard workouts, the highest you should go is the middle of Zone 2, maybe the high end on shorter rides of about an hour.</p>
+
+  <h3>Example week</h3>
+  <p>Here's what my week looks like. Structure yours around your own work week.</p>
+  <div class="table-scroll">
+    <table>
+      <thead><tr><th scope="col">Day</th><th scope="col">Ride</th><th scope="col">Intensity</th></tr></thead>
+      <tbody>
+        <tr><td class="day">Mon</td><td>Off or easy</td><td class="pct"><span class="chip c-rec">Rest</span></td></tr>
+        <tr><td class="day">Tue</td><td>About 2 hours, getting longer as you build volume</td><td class="pct"><span class="chip c-z2">Low Z2</span>55–60% FTP</td></tr>
+        <tr><td class="day">Wed</td><td>2-hour tempo ride (hard at 120 minutes)</td><td class="pct"><span class="chip c-tempo">Tempo</span>70–75% FTP</td></tr>
+        <tr><td class="day">Thu</td><td>Recovery, 1–1.5 hours</td><td class="pct"><span class="chip c-rec">Recovery</span>50–55% FTP</td></tr>
+        <tr><td class="day">Fri</td><td>Recovery, or off the bike</td><td class="pct"><span class="chip c-rec">Easy</span></td></tr>
+        <tr><td class="day">Sat</td><td>Long ride: your long day</td><td class="pct"><span class="chip c-z2">Z2</span>50–60% FTP</td></tr>
+        <tr><td class="day">Sun</td><td>Early Birds ride if it works; otherwise the short sprint session (30-second and 1-minute all-out sprints, repeated)</td><td class="pct"><span class="chip c-vo2">All-out</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Building to a century</h3>
+  <p>The Saturday long ride is where you prepare for a century or any other long event. In the 6–8 weeks before it:</p>
+  <ul>
+    <li><strong>Build the length.</strong> Work up so a few of these rides reach about 4 hours, outdoors if you can. Make the last one 2–3 weeks before the event.</li>
+    <li><strong>Ride some at event pace.</strong> The long ride here sits at 50–60% of FTP, which is easier than you'll probably ride the event. Ride one or two at your planned pace, and eat exactly what you plan to eat on the day.</li>
+    <li><strong>Watch the timing.</strong> The intensity block has no long ride by default. If your event lands at the end of one, swap a hard day for a long ride (see <a href="#intensity">the intensity block</a>).</li>
+  </ul>
+  <p>You don't need a 100-mile training ride. Your shorter indoor rides build the engine. The long rides teach your legs, stomach and contact points what hours 4 and 5 feel like.</p>
+
+  <h3>Managing recovery</h3>
+  <p>What you need is enough recovery between hard workouts. Count the long ride as a hard workout too, so that's really three a week.</p>
+  <p>Keep the long ride if you possibly can. If the week doesn't fit, rearrange it: for example, do the sprints on Wednesday, with the long ride on Saturday as the other hard day.</p>
+  <p><strong>Keep your easy rides easy.</strong> You won't lose fitness because you rode an hour at around 50% of FTP to recover from a hard workout the day before. That just doesn't happen.</p>
+  <p>A recovery ride is for getting blood flowing to flush the legs. You're not trying to build muscle fibers or mitochondria on it. The point of recovery is to recover, and you aren't leaving any gains on the table by doing a recovery ride.</p>
+  <p>Fatigue stacks up slowly through the block, and it sneaks up on you. You don't need anything super intense.</p>
+  <p class="takeaway">In the base block, you're stressing the body through duration, not intensity.</p>
+
+  <nav class="pager" aria-label="Previous and next section">
+    <a href="#method"><small>Previous</small><span>Methodology</span></a>
+    <a class="next" href="#intensity"><small>Next</small><span>Intensity block</span></a>
+  </nav>
+</section>
+
+<!-- INTENSITY -->
+<section data-tab="intensity" aria-labelledby="h-intensity" hidden>
+  <h2 id="h-intensity">The intensity block</h2>
+  <p class="intro">Push and pull your threshold up. It's different from how you'd normally peak for a racing season, and it can be a bit more unstructured: easier outside, or with Zwift races. Either way, <strong>intensity is intensity</strong>.</p>
+
+  <h3>How this differs from a traditional peak</h3>
+  <p>The traditional approach builds intensity from sweet spot to threshold, making the threshold efforts longer and longer. Then you peak with VO2 work while lowering the volume a bit.</p>
+  <p>We go almost the other way around. Much of the work is done <strong>just above and just below FTP</strong>, so <strong>over-unders</strong> are huge in this block. You can also start with efforts of about 2 minutes above threshold, closer to VO2 max, then gradually stretch the duration so you can hold them for longer and longer. Eventually, that power becomes your new threshold.</p>
+
+  <div class="compare">
+    <div class="intensity"><h5>Intensity block</h5><p style="margin:0;font-size:15.5px;line-height:1.45">Push and pull your threshold up.</p></div>
+    <div class="base"><h5>Base block</h5><p style="margin:0;font-size:15.5px;line-height:1.45">Support that new threshold.</p></div>
+  </div>
+
+  <h3>The workouts</h3>
+  <p><strong>Ease in first.</strong> At the start of the block, build into it with a few short sprints of around 20 seconds, for example on an endurance ride, so your body starts adapting. The sprint sessions from the base block (and efforts like 2-minute VO2s) should mean you start this block pretty well maintained.</p>
+  <ul>
+    <li><strong>Week 1:</strong> the test week below. In a cycle where you only do the 5-minute max, do shorter intervals with slightly longer rest for the rest of the week.</li>
+    <li><strong>Weeks 2–4:</strong> gradually make the intervals longer and longer. That's your body adapting to over-threshold and around-threshold work.</li>
+  </ul>
+
+  <h4>Test week</h4>
+  <p>The first week of the block is the lead-in, and it's where the max tests go (see <a href="#method">Testing without a taper</a> in the methodology). The efforts are hard but short, so total load stays low. Count it as week 1, or make the block three training weeks plus the test week.</p>
+  <div class="table-scroll">
+    <table>
+      <thead><tr><th scope="col">Day</th><th scope="col">Session</th></tr></thead>
+      <tbody>
+        <tr><td class="day">Day 1</td><td><span class="chip c-z2">Opener</span><br>Easy ride with a few short, sharp efforts.</td></tr>
+        <tr><td class="day">Day 2</td><td><span class="chip c-vo2">Test</span><br>5-minute max.</td></tr>
+        <tr><td class="day">Day 3</td><td><span class="chip c-rec">Recovery</span></td></tr>
+        <tr><td class="day">Day 4</td><td><span class="chip c-vo2">Test</span><br>12-minute max.</td></tr>
+        <tr><td class="day">Day 5</td><td><span class="chip c-rec">Recovery</span></td></tr>
+        <tr><td class="day">Day 6</td><td><span class="chip c-vo2">Test</span><br>3-minute max.</td></tr>
+        <tr><td class="day">Day 7</td><td><span class="chip c-z2">Endurance</span> or <span class="chip c-rec">Recovery</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <ul>
+    <li><strong>Always do the 5-minute first.</strong> It's the test you do every cycle, so doing it when you're freshest keeps it comparable whether or not you do the full set.</li>
+    <li><strong>Keep it repeatable.</strong> Same trainer, ERG off, same warm-up. Start the 12-minute slightly under what you think you can hold and finish hard. If you test outdoors, use the same climb each time.</li>
+    <li><strong>Fuel like a VO2 day.</strong> Have carbohydrate beforehand, since these are max efforts.</li>
+    <li><strong>Skip a bad test.</strong> If you're sick, slept badly or the number is way off, retest later rather than set zones from it. After the full set, check that the Intervals.icu FTP estimate has updated, then set your zones for the block.</li>
+  </ul>
+  <p>For some good workouts and more on how this works, watch <a href="https://www.youtube.com/watch?v=59VNO0XT3LY" target="_blank" rel="noopener">4 Ways to Increase Threshold Power in 2026</a>. The intensity block is all about increasing your threshold power, and these are the kinds of workouts that do it.</p>
+
+  <h4>Workout types</h4>
+  <p>Now is the time for the intense work: <strong>VO2 work</strong>, <strong>threshold work</strong> and <strong>some sweet spot</strong>.</p>
+  <ul>
+    <li><strong>30-15s.</strong> These are pretty good in this block. There's a <a href="https://youtu.be/NSzAYj43wK8" target="_blank" rel="noopener">good GCN video on them</a>.</li>
+    <li><strong>Over-unders.</strong> Absolutely great for raising FTP.</li>
+    <li><strong>Hard-start sweet spot.</strong> Do hard-start sweet spot rather than steady sweet spot. With plain sweet spot, your heart rate doesn't climb into the higher zones fast enough. Steady sweet spot is more of a maintenance workout, for supporting FTP.</li>
+  </ul>
+
+  <h4>VO2 max work</h4>
+  <p>VO2 intervals (about 2–5 minutes at roughly 110–130% of FTP) belong in this block, but they only work if you go hard enough. In <a href="https://youtu.be/NLYXStPspuc" target="_blank" rel="noopener">Cycling VO2Max Training Progression After Base Training</a>, coach Landry Bobo explains why trained riders still do them. Newer riders get big changes to the heart. Trained riders get less of that, and more of the rest: getting used to sustained high power, better lactate clearance, a top-up of VO2 max through plasma volume and muscle enzymes, and the mental toughness to keep going when everything says stop.</p>
+  <ul>
+    <li><strong>Come in recovered and fueled.</strong> If you're still tired from a big weekend ride, move the session to midweek, and eat carbohydrate beforehand. A VO2 session you can't ride hard enough is wasted. Ride endurance instead.</li>
+    <li><strong>Add intervals before stretching them.</strong> Going from 3×3 (9 minutes of work) to 5×5 (25 minutes) is a big jump. Build it in steps: 3×3, then 5×3, then 4-minute efforts, then 5-minute efforts. It's the same idea as stretching your 2-minute efforts toward threshold.</li>
+    <li><strong>Use heart rate as a backup.</strong> When you can't hold the power on longer efforts, finish the set anyway and check whether you're still reaching about 90% of max heart rate. Next time, try to hold power for one more interval. Heart rate lags behind effort, so treat it as a rough check, and expect it to read low on short intervals like 30-15s.</li>
+    <li><strong>Train your weak durations.</strong> Ride all the VO2 lengths over a few months, then lean on the ones you're worst at. Check that your "VO2" workouts are really hard enough. In the video, one rider's short intervals barely raised his heart rate, and most of his real VO2 work came from threshold sets.</li>
+  </ul>
+
+  <h4>Lactate clearance</h4>
+  <p>For your muscles, a key goal of this phase is <strong>lactate clearance</strong>. Workouts like over-unders, hard-start sweet spot and hard-start threshold are really, really hard. They spike your lactate and get your heart rate straight into the right zone. You spend the rest of the interval teaching your body to use that lactate (lactate shuttling). Then, when you come off the interval, your body works on clearing it.</p>
+  <p>These workouts also teach you what riding in that zone feels like, that you can hold it, and what that kind of work does to you. That way you're not surprised by it on a group ride or in a race.</p>
+
+  <h3>Group rides and outdoor options</h3>
+  <p>This is also a good time for those hard group rides you've been wanting to do.</p>
+  <ul>
+    <li><strong>The D30 route.</strong> On weekends, ride it and just smash the climbs. The route is pretty much built as a VO2 workout: climbs of about 3–5 minutes, a little rest between them, then you're at it again.</li>
+    <li><strong>VV.</strong> A pretty hard ride, and a good workout. Definitely a good option too.</li>
+  </ul>
+  <p>These count as intensity as long as you ride the efforts fully: pick the climbs and hold the power from bottom to top.</p>
+
+  <h4>Zwift</h4>
+  <p>Right now I'm doing the Tour of Watopia on Zwift and mashing it for power PRs. That's hard, and the Zwift races are full gas. After the ride, look at which power zones you spent time in, and which heart rate zones too. Heart rate can tell you how much time you actually spent at VO2-level effort, so it's worth tracking.</p>
+
+  <h3>Volume and example week</h3>
+  <p>Volume drops slightly in this block. Your body's going to need it. That means about <strong>three hard workouts a week</strong>, with recovery on pretty much every other day.</p>
+  <div class="table-scroll">
+    <table>
+      <thead><tr><th scope="col">Day</th><th scope="col">Ride</th></tr></thead>
+      <tbody>
+        <tr><td class="day">Mon</td><td><span class="chip c-rec">Off</span></td></tr>
+        <tr><td class="day">Tue</td><td><span class="chip c-thr">Hard</span></td></tr>
+        <tr><td class="day">Wed</td><td><span class="chip c-rec">Recovery</span></td></tr>
+        <tr><td class="day">Thu</td><td><span class="chip c-thr">Hard</span></td></tr>
+        <tr><td class="day">Fri</td><td><span class="chip c-rec">Recovery</span></td></tr>
+        <tr><td class="day">Sat</td><td><span class="chip c-thr">Hard</span></td></tr>
+        <tr><td class="day">Sun</td><td><span class="chip c-rec">Recovery</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Alternatively, make Saturday easy and Sunday hard, with Monday's day off the bike as the recovery after it.</p>
+  <p>The hard days are probably only about 1–1.5 hours each. The days after are about recovering: ride easy to flush the legs, and take a walk. All in, that's only about <strong>5, maybe 6 hours on the bike</strong> a week. It could be more, but it should definitely be fewer hours than in the base block.</p>
+
+  <h4>Swap in a long ride</h4>
+  <p>A long ride is hard in its own way, so it can replace one of the three hard days. Swap Saturday's session for 3–4 hours, outdoors if you can. Ride most of it at endurance or event pace and put some efforts in: the climbs on the D30 route, a hard group ride, or some tempo late in the ride. Eat the way you plan to on event day.</p>
+  <p>Count it as a hard day and keep recovery around it. That week's hours go up, so keep the other two hard sessions as planned and don't add more. It's especially worth doing when a century or long event lands at the end of an intensity block, so your last long ride isn't weeks before the event (see <a href="#base">Building to a century</a> in the base block).</p>
+
+  <h3>Build up over time</h3>
+  <p>Longer and more intense workouts are something you have to build up to. At the start, your intensity workouts might be 45 minutes, maybe an hour. In the next intensity block, you might do 1 hour 15 minutes or 1.5 hours, and the intervals will stretch out longer.</p>
+  <p>You won't be able to start exactly where you want to be with the amount of work you're doing. This isn't a one-year thing.</p>
+  <p class="takeaway">Building this kind of fitness takes years and years.</p>
+
+  <nav class="pager" aria-label="Previous and next section">
+    <a href="#base"><small>Previous</small><span>Base block</span></a>
+    <a class="next" href="#fueling"><small>Next</small><span>Fueling</span></a>
+  </nav>
+</section>
+
+<!-- FUELING -->
+<section data-tab="fueling" aria-labelledby="h-fueling" hidden>
+  <h2 id="h-fueling">Fueling and the science behind it</h2>
+  <p class="intro">What your body burns depends on how hard you ride, and what you eat on the bike changes both the fuel mix and how long you can keep going. This is the research behind the century fueling plan.</p>
+
+  <h3>You always burn both fat and carbohydrate</h3>
+  <p>There's no switch from "fat burning" to "carb burning." Both fuels are always in use, and the mix slides as intensity rises. At easy efforts most of your energy comes from fat. As you push harder, carbohydrate takes a bigger and bigger share. The point where the two lines cross is called the <strong>crossover point</strong>, an idea first laid out by exercise physiologists George Brooks and Jacques Mercier.</p>
+
+  <figure class="chart">
+    <div class="chart-box">
+      <svg viewBox="0 0 640 262" role="img" aria-label="Schematic of the share of energy from fat falling and from carbohydrate rising as intensity increases, crossing at about 55 percent of VO2max, with fat burning peaking around 60 to 65 percent.">
+        <rect x="374.3" y="40" width="39.3" height="170" fill="color-mix(in srgb, var(--z2) 12%, transparent)"/>
+        <g stroke="var(--rule)" stroke-width="1">
+          <line x1="60" y1="210" x2="610" y2="210"/>
+          <line x1="60" y1="125" x2="610" y2="125"/>
+          <line x1="60" y1="40" x2="610" y2="40"/>
+        </g>
+        <g text-anchor="end">
+          <text x="52" y="214">0%</text>
+          <text x="52" y="129">50%</text>
+          <text x="52" y="44">100%</text>
+        </g>
+        <g text-anchor="middle">
+          <text x="60" y="228">20</text>
+          <text x="217.1" y="228">40</text>
+          <text x="374.3" y="228">60</text>
+          <text x="531.4" y="228">80</text>
+          <text x="335" y="254">Intensity (% of VO2max)</text>
+        </g>
+        <line x1="335" y1="38" x2="335" y2="117" stroke="var(--muted)" stroke-width="1"/>
+        <polyline points="60,167.5 217.1,142 335,125 413.6,99.5 531.4,67.2 610,53.6" fill="none" stroke="var(--thr)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <polyline points="60,82.5 217.1,108 335,125 413.6,150.5 531.4,182.8 610,196.4" fill="none" stroke="var(--z2)" stroke-width="3.5" stroke-dasharray="9 6" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="335" cy="125" r="5" fill="var(--surface)" stroke="var(--ink)" stroke-width="2"/>
+        <g class="lbl">
+          <text x="331" y="32" text-anchor="end" fill="var(--ink)">Crossover ~55%</text>
+          <text x="378" y="32" fill="var(--z2)">Fat burning peaks ~60–65%</text>
+        </g>
+        <line x1="70" y1="50" x2="100" y2="50" stroke="var(--thr)" stroke-width="3.5" stroke-linecap="round"/>
+        <text x="106" y="54" class="lbl" fill="var(--thr)">Carbohydrate</text>
+        <line x1="70" y1="66" x2="100" y2="66" stroke="var(--z2)" stroke-width="3.5" stroke-dasharray="9 6" stroke-linecap="round"/>
+        <text x="106" y="70" class="lbl" fill="var(--z2)">Fat</text>
+      </svg>
+    </div>
+    <figcaption>Schematic, not your own data. Lines show each fuel's share of total energy. The crossover and peak-fat-burning intensities are group averages and shift from rider to rider. Read “% of VO2max” as roughly % of your 5-minute max power.</figcaption>
+  </figure>
+
+  <aside class="note" aria-labelledby="h-vo2">
+    <p class="note-label">Reading the percentages</p>
+    <h4 id="h-vo2">What is VO2 max?</h4>
+    <p>VO2 max is the most oxygen your body can take in and use: the size of your aerobic engine. It isn't heart rate. It's measured in a lab, wearing a mask during a ramp test, and apps like Garmin and WKO estimate it from your rides.</p>
+    <p>The research on this page gives intensity as a percentage of VO2 max. Without a lab, read it as a <strong>percentage of your 5-minute max power</strong>. The power you can hold for about 5 minutes is close to your power at VO2 max, so the two line up roughly. For example, if your 5-minute max is 350 W, the crossover at about 55% sits near 190 W, and peak fat burning at about 63% sits near 220 W. Treat these as ballpark figures; riders vary.</p>
+  </aside>
+
+  <p>Where do the lines cross? One research group that ran more than 5,000 of these tests found the crossover averages about <strong>55% of VO2max</strong>, but with wide differences between people. Training moves it. Endurance training adds mitochondria and fat-burning enzymes, which pushes the crossover to higher intensities. That's the mitochondrial density the <a href="#base">base block</a> is building.</p>
+
+  <h3>FATmax: where fat burning peaks</h3>
+  <p>The chart shows each fuel's <em>share</em>. The absolute <em>rate</em> of fat burning, in grams per minute, behaves differently. It climbs as you ride harder, peaks, then drops off. Researchers Juul Achten and Asker Jeukendrup called that peak <strong>FATmax</strong>.</p>
+  <ul>
+    <li>In 55 endurance-trained men, fat burning peaked at about <strong>0.52 g/min at roughly 63% of VO2max</strong>. Even in that fairly uniform group, the peak varied a lot from person to person.</li>
+    <li>One coach's rough translation puts 65% of VO2max at the high end of Zone 2. So your Zone 2 riding sits close to where fat burning is highest and the two fuels are near balance.</li>
+  </ul>
+
+  <h4>What moves the curve</h4>
+  <ul>
+    <li><strong>Eating carbs before you ride.</strong> In one study, 75 g of glucose 45 minutes before a ramp test cut peak fat burning by 28% and lowered the FATmax intensity from about 60% to 52% of VO2max. Max power in the same test went <em>up</em> (346 W vs 332 W). Less fat burning isn't a performance problem by itself.</li>
+    <li><strong>Eating carbs during the ride.</strong> In the 2026 fueling study below, fat supplied about 54% of energy in the third hour at 90 g/h, versus 42% at 120 and 150 g/h.</li>
+    <li><strong>Long-term low-carb (keto) diets.</strong> Elite ultra athletes on a keto diet burned fat at more than twice the peak rate of high-carb athletes (1.54 vs 0.67 g/min). But they used just as much muscle glycogen over a 3-hour run, so the extra fat burning didn't spare their carb stores.</li>
+  </ul>
+  <p class="takeaway">Fat burning is a trained trait. Base miles raise it; fueling on the bike doesn't undo that.</p>
+
+  <h3>How much to eat on long rides: 90 vs 120 vs 150 g/h</h3>
+  <p>A 2026 study in <em>Medicine &amp; Science in Sports &amp; Exercise</em> (Martyn, Gonzalez, Stellingwerff, Burke, Morton and colleagues) tested popular fueling targets head to head.</p>
+  <div class="compare">
+    <div class="base">
+      <h5>The setup</h5>
+      <dl>
+        <div><dt>Riders</dt><dd>8 trained male cyclists, average VO2max about 73 ml/kg/min.</dd></div>
+        <div><dt>Ride</dt><dd>3 hours just below the first lactate threshold, with three 5-minute harder efforts in the last hour.</dd></div>
+        <div><dt>Finish</dt><dd>A time-to-exhaustion test at a fixed, hard power.</dd></div>
+      </dl>
+    </div>
+    <div class="intensity">
+      <h5>The fueling</h5>
+      <dl>
+        <div><dt>Doses</dt><dd>10, 90, 120 or 150 g/h. The three higher doses were randomized and blinded.</dd></div>
+        <div><dt>Mix</dt><dd>Maltodextrin and fructose at 1:0.8, in 800 ml of fluid per hour.</dd></div>
+        <div><dt>Before</dt><dd>Well fueled: 8 g/kg of carbs the day before, plus a 2 g/kg breakfast.</dd></div>
+      </dl>
+    </div>
+  </div>
+
+  <div class="table-scroll">
+    <table>
+      <thead><tr><th scope="col">Intake</th><th scope="col">Finished the 3 hours</th><th scope="col">Time to exhaustion</th></tr></thead>
+      <tbody>
+        <tr><td class="pct">10 g/h</td><td>4 of 8</td><td>Familiarization trial, not compared</td></tr>
+        <tr><td class="pct">90 g/h</td><td>8 of 8</td><td class="pct">299 s</td></tr>
+        <tr><td class="pct">120 g/h</td><td>8 of 8</td><td class="pct">324 s</td></tr>
+        <tr><td class="pct">150 g/h</td><td>7 of 8</td><td class="pct">161 s</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h4>What it found</h4>
+  <ul>
+    <li><strong>90 to 120 g/h:</strong> riders burned more of the carbs they drank, and lasted a little longer at the end. With only 8 riders, the difference between doses wasn't statistically significant.</li>
+    <li><strong>120 to 150 g/h:</strong> an extra 30 g/h of intake raised the carbs actually burned by only about 8 g/h. Total carb burning was essentially the same, and the end-of-ride performance was worse on average.</li>
+    <li><strong>The model's best guess:</strong> fitting intake against total exercise time gave an average optimum of about <strong>107 g/h</strong>. Nobody actually rode at that dose.</li>
+    <li><strong>Big individual differences:</strong> at 150 g/h, riders burned anywhere from about 88 to 142 g/h of what they drank. One rider barely changed between 90, 120 and 150; another burned much more at each step up.</li>
+    <li><strong>The gut matters:</strong> stomach symptoms were mild overall, but some riders' worst performances lined up with their worst symptoms. That's a likely part of why 150 g/h underperformed.</li>
+  </ul>
+  <p class="takeaway">More carbs help up to a point, then they stop helping. Where that point sits is personal.</p>
+
+  <h3>Putting it to work for the century</h3>
+  <ul>
+    <li><strong>Start from the tested range.</strong> 90 to 120 g/h is where every rider finished and performance held up. The study gives no reason to go beyond that.</li>
+    <li><strong>Rehearse on the long ride.</strong> Use Saturday's long ride to practice your century intake, so race day isn't the first time your gut sees it. Raise the amount gradually across weeks and note how your stomach and legs feel late in the ride.</li>
+    <li><strong>Judge by how you ride, not by the number.</strong> If a higher intake doesn't help you hold power in the last hour, or it upsets your stomach, it isn't earning its place.</li>
+    <li><strong>Keep the base miles.</strong> Fueling covers the ride you're on. Zone 2 volume is what raises how much fat you can burn on every ride after.</li>
+  </ul>
+
+  <h3>Fuel the ride, lose weight off the bike</h3>
+  <p>With a power meter, you know roughly what a ride costs. The kilojoules on your head unit are close to the calories (kcal) you burned. Your body is only about a quarter efficient, and that almost exactly cancels out the conversion between the two units. So 700 kJ of work is roughly 700 kcal.</p>
+  <p>You don't need to replace all of that, and you couldn't if you tried. The goal is to replace the <strong>carbohydrate</strong> you're burning. As the chart above shows, even easy riding burns some carbs. On Zone 2 and long endurance rides, carbs supply roughly <strong>40–60% of the energy</strong>, and more as the power goes up. A quick rule:</p>
+  <p class="takeaway">Carbs to eat per hour ≈ kJ per hour × 0.4 to 0.6 ÷ 4</p>
+  <div class="table-scroll">
+    <table>
+      <thead><tr><th scope="col">Average power</th><th scope="col">Burned per hour</th><th scope="col">Carbs burned per hour</th></tr></thead>
+      <tbody>
+        <tr><td class="pct">150 W</td><td class="pct">~540 kcal</td><td class="pct">~55–80 g</td></tr>
+        <tr><td class="pct">180 W</td><td class="pct">~650 kcal</td><td class="pct">~65–95 g</td></tr>
+        <tr><td class="pct">210 W</td><td class="pct">~750 kcal</td><td class="pct">~75–115 g</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>That's where the familiar 60, 90 and 120 g/h targets come from: more power, more carbs. Treat it as a starting point. Eating carbs shifts your body toward burning more of them, and your gut sets the upper limit. Above about 60 g/h, use a product that mixes glucose (or maltodextrin) and fructose, since your gut can only absorb about 60 g/h of glucose on its own.</p>
+
+  <h4>Always fuel the ride</h4>
+  <p>Fuel every ride, even the easy ones. You'll still finish in a calorie deficit, because you're replacing the carbs, not the fat. The ride's job is to hit its numbers, and you can't do that running on empty. Fat is also a less oxygen-efficient fuel: it yields about 7% less energy per litre of oxygen than carbohydrate (about 4.7 vs 5.0 kcal per litre), and your body can only burn it so fast. When carbs run low, the same power costs more oxygen, and eventually you can't hold it.</p>
+
+  <h4>Where weight comes off</h4>
+  <p>Weight comes off in the calories you didn't replace on the bike, and in what you eat the rest of the day. Keep any deficit modest, and take it from your meals off the bike, not from fueling around hard sessions and long rides.</p>
+  <p class="takeaway">Fuel the work on the bike. Manage your weight off it.</p>
+
+  <h4>Sources</h4>
+  <ul class="sources">
+    <li>Martyn et al. (2026), <a href="https://doi.org/10.1249/mss.0000000000004176" target="_blank" rel="noopener">effects of 10, 90, 120 and 150 g/h carbohydrate</a>, <em>Medicine &amp; Science in Sports &amp; Exercise</em>. Numbers here come from the <a href="https://marathonhandbook.com/90-120-or-150-grams-of-carbs-per-hour-where-the-benefits-level-off/" target="_blank" rel="noopener">Marathon Handbook write-up</a>, not the full paper. Video: <a href="https://www.youtube.com/watch?v=PV2qXYnVbXw" target="_blank" rel="noopener">90 vs 120 vs 150g/h</a> (Jesse Coyle).</li>
+    <li><a href="https://canada.humankinetics.com/blogs/excerpt/the-crossover-concept" target="_blank" rel="noopener">The crossover concept</a>, <em>Physiology of Sport and Exercise</em>.</li>
+    <li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC9027421/figure/nutrients-14-01605-f001" target="_blank" rel="noopener">Crossover in 5,000+ exercise tests</a>, <em>Nutrients</em> (2022).</li>
+    <li>Achten &amp; Jeukendrup, <a href="https://research.birmingham.ac.uk/en/publications/maximal-fat-oxidation-during-exercise-in-trained-men/" target="_blank" rel="noopener">maximal fat oxidation in trained men</a> and <a href="https://www.sponet.de/sponet/Record/3036808" target="_blank" rel="noopener">pre-exercise carbohydrate and FATmax</a>.</li>
+    <li><a href="https://knowledgeiswatt.substack.com/p/13-fats-and-carbs-utilization-at" target="_blank" rel="noopener">Fats and carbs at different intensities</a>, Knowledgeiswatt (zone mapping).</li>
+    <li>Volek et al. (2016), <a href="https://www.pubmed.gov/26892521/" target="_blank" rel="noopener">metabolic characteristics of keto-adapted ultra-endurance runners</a>.</li>
+  </ul>
+
+  <nav class="pager" aria-label="Previous and next section">
+    <a href="#intensity"><small>Previous</small><span>Intensity block</span></a>
+    <a class="next" href="#science"><small>Next</small><span>Science</span></a>
+  </nav>
+</section>
+
+<!-- SCIENCE -->
+<section data-tab="science" aria-labelledby="h-science" hidden>
+  <h2 id="h-science">Science</h2>
+  <p class="intro">Interesting questions that don't belong to one block: why muscles cramp, and why the pros ride so much Zone 2.</p>
+
+  <h3>Why muscles cramp</h3>
+  <p>For years, cramps were blamed on dehydration and lost electrolytes. The research has shifted. The leading explanation now is a signalling problem between the muscle and the spinal cord.</p>
+  <p>Every muscle has two kinds of sensors. <strong>Muscle spindles</strong> sense stretch and tell the muscle to contract. <strong>Golgi tendon organs</strong> sense tension and tell it to relax. When a muscle is fatigued, the balance tips: the contract signal gets louder and the relax signal gets quieter. The nerve keeps firing and the muscle locks up, especially when it's working in a shortened position.</p>
+
+  <h4>What the evidence says</h4>
+  <ul>
+    <li><strong>Pace, not dehydration.</strong> In 210 Ironman triathletes, those who cramped had the same blood electrolytes and body-weight loss as those who didn't. What predicted cramping was racing faster than expected, a faster bike split, and a history of cramps.</li>
+    <li><strong>Fatigue is the trigger.</strong> Cramps usually come late in an event, once the muscle is working harder or longer than it's trained for.</li>
+    <li><strong>Electrolytes still play a part.</strong> In a small study, drinking plain water after a hot, sweaty run made muscles more cramp-prone, while an electrolyte drink made them less so.</li>
+  </ul>
+
+  <h4>Why pickle juice can work</h4>
+  <p>In dehydrated men, cramps lasted about 85 seconds after a shot of pickle juice versus about 134 seconds after water. That's too fast for anything to be absorbed, and blood sodium didn't change. The likely reason is a reflex: strong flavours stimulate receptors in the mouth and throat, which send signals that calm the overexcited nerve driving the cramp. A drink built on the same idea, using the spicy compounds found in chili and mustard, delayed cramps and made them less intense in a lab study, though it didn't shorten them. Mustard itself hasn't been tested.</p>
+
+  <h4>What to do</h4>
+  <ul>
+    <li><strong>Train for the effort you'll ride.</strong> Being fit for the intensity and the duration is the best prevention. Ride your long rides at century effort, and don't go out too hard.</li>
+    <li><strong>Stretch it out.</strong> It's the most effective fix. Calf: drop your heel. Hamstring: straighten the leg. Quad: bend the knee and pull your foot back.</li>
+    <li><strong>Replace sodium on long, hot rides.</strong> Drink electrolytes, not just water.</li>
+    <li><strong>Try a strong-tasting shot.</strong> Pickle juice may shorten a cramp. It's cheap and harmless for most people, but the evidence is modest.</li>
+    <li><strong>Don't count on salt tablets or magnesium.</strong> They're unlikely to prevent cramps on their own.</li>
+  </ul>
+
+  <aside class="note" aria-labelledby="h-cranks">
+    <p class="note-label">From my riding</p>
+    <h4 id="h-cranks">Shorter cranks</h4>
+    <p>I used to cramp in my hip flexors, especially the sartorius, the long strap muscle that runs across the front of the thigh. At the top of the pedal stroke, my hip and knee were bent so far that the muscle sat in a very shortened position, and that's where the cramps started.</p>
+    <p>Since switching to much shorter cranks, 155 mm, my knee doesn't come up as high, my hip stays a little more open, and that muscle stays slightly longer. I cramp there much less now.</p>
+    <p>This is my experience, not a study. It does fit the research, which finds cramps are most likely when a muscle works in a shortened position. If you cramp in the same spot every time, look at your bike fit and crank length as well as your pacing and fueling.</p>
+  </aside>
+
+  <p class="takeaway">Cramps are mostly a fatigue signal. Train for the effort, pace it, and stretch when one hits.</p>
+
+  <h4>Sources</h4>
+  <ul class="sources">
+    <li>Schwellnus et al. (2011), <a href="https://bjsm.bmj.com/content/45/8/650" target="_blank" rel="noopener">exercise-associated muscle cramping in Ironman triathletes</a>, <em>British Journal of Sports Medicine</em>.</li>
+    <li>Schwellnus (2009), <a href="https://bjsm.bmj.com/content/43/6/401" target="_blank" rel="noopener">altered neuromuscular control, dehydration or electrolyte depletion?</a>, <em>British Journal of Sports Medicine</em>.</li>
+    <li>Nelson &amp; Churilla (2016), <a href="https://www.researchgate.net/profile/Nicole_Nelson5/publication/302592503_A_Narrative_Review_of_Exercise-Associated_Muscle_Cramps_Factors_that_Contribute_to_Neuromuscular_Fatigue_and_Management_Implications/links/578368f508ae37d3af6ba4d6.pdf" target="_blank" rel="noopener">narrative review of exercise-associated muscle cramps</a>, <em>Muscle &amp; Nerve</em>.</li>
+    <li><a href="https://sponet.de/sponet/Record/4033522" target="_blank" rel="noopener">Exercise-associated muscle cramps: causes, prevention and treatment</a>, <em>Science &amp; Sports</em> (2014).</li>
+    <li>Miller et al. (2010), <a href="https://oliverfinlay.com/assets/miller%20et%20al%20(2010),%20reflex%20inhibition%20of%20electrically%20induced%20muscle%20cramps%20in%20hypohydrated%20humans.pdf" target="_blank" rel="noopener">reflex inhibition of electrically induced muscle cramps</a> (pickle juice).</li>
+    <li>Craighead et al. (2017), <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC5554746" target="_blank" rel="noopener">TRP channel agonists and exercise-induced cramps</a>, <em>Muscle &amp; Nerve</em>. Funded by the drink's maker.</li>
+    <li>Lau, Kato &amp; Nosaka (2019), <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6407543" target="_blank" rel="noopener">water vs an electrolyte drink and cramp susceptibility</a>, <em>BMJ Open Sport &amp; Exercise Medicine</em>.</li>
+  </ul>
+
+  <h3>Why the pros ride so much Zone 2</h3>
+  <p>Pros spend most of their hours riding easy, and that's often taken as proof that easy riding is the best training. Lidl-Trek coach Mattias Reck, who coaches Mads Pedersen, gives a different reason: for a big engine, the middle zones cost too much to ride for hours.</p>
+  <p>Mads's FTP is around 450 W. His tempo intervals are 380–400 W, and on paper the top of his Zone 2 is around 330–340 W. Riding every endurance ride there for five or six hours would mean eating 9,000–10,000 kcal a day. So even though his zones allow more, he comes home from endurance rides at 250–280 W, eating 80–100 g of carbs an hour. Pros get their stimulus from huge volume plus some very hard sessions, and Reck's warning for them is that "too much zone three kills the program."</p>
+  <p>For riders with fewer hours, he says the opposite. If you train three or four times a week, you have days to recover in between, and a smaller engine pays a much smaller bill for tempo: "Don't be afraid of zone 3. Just make sure that you eat properly." A three-hour Sunday group ride with some tempo, threshold and sprints is good training, not a mistake. The research points the same way: polarized and pyramidal training worked equally well overall, but recreational athletes tended to do better on pyramidal plans, which include more tempo and threshold.</p>
+  <p>He adds two caveats. Make the hard sessions really hard: at amateur power, easy and threshold are close together, so use short intervals like 30-15s and fast starts to get real time near your VO2 max. And an easy ride can be too easy: two hours sitting on a wheel at 180 W does little for a time-crunched rider.</p>
+  <p>Zone 2 still matters for capillaries, fat burning and durability, which is why the base block keeps the long ride. The goal is the same for pros and for us: do as much useful work as you can still recover from.</p>
+  <p class="takeaway">Pros ride easy because their hard riding costs too much. Ours doesn't, so use it.</p>
+
+  <h4>Sources</h4>
+  <ul class="sources">
+    <li>Mattias Reck on <a href="https://youtu.be/iQX7E9YUEfk" target="_blank" rel="noopener">The Roadman Podcast</a> (2026). One coach's experience, not a study. More from the interview is on the <a href="#videos">Videos</a> tab.</li>
+    <li>Rosenblat et al. (2025), <a href="https://www.fisiologiadelejercicio.com/wp-content/uploads/2025/02/Which-Training-Intensity-Distribution-Intervention-will.pdf" target="_blank" rel="noopener">which training intensity distribution works best</a>, <em>Sports Medicine</em>.</li>
+  </ul>
+
+  <nav class="pager" aria-label="Previous and next section">
+    <a href="#fueling"><small>Previous</small><span>Fueling</span></a>
+    <a class="next" href="#workouts"><small>Next</small><span>Workouts</span></a>
+  </nav>
+</section>
+
+<!-- WORKOUTS -->
+<section data-tab="workouts" aria-labelledby="h-workouts" hidden>
+  <h2 id="h-workouts">Workouts</h2>
+  <p class="intro">Every session mentioned in the guide, with the block it belongs to and the video to watch where there is one. All the videos are also collected on the <a href="#videos">Videos</a> tab.</p>
+
+  <div class="lib">
+    <article class="card">
+      <div class="card-head"><h5>1-minute all-out sprints</h5><div class="chips"><span class="chip c-z2">Base block</span><span class="chip c-vo2">All-out</span></div></div>
+      <p>The weekly sprint workout that keeps your top end through the base block. Short, pretty-much-all-out efforts, or 30-second and 1-minute sprints repeated.</p>
+      <a class="watch" href="https://www.youtube.com/watch?v=lc6zYdoGZh4" target="_blank" rel="noopener">The Best Science Backed Short Intensity Workout</a>
+    </article>
+
+    <article class="card">
+      <div class="card-head"><h5>Long tempo</h5><div class="chips"><span class="chip c-z2">Base block</span><span class="chip c-tempo">Tempo</span></div></div>
+      <p>1.5–2 hours of tempo, around 70–75% of FTP. If that's too long, swap in about an hour of sweet spot instead.</p>
+    </article>
+
+    <article class="card">
+      <div class="card-head"><h5>Zone 2 endurance &amp; the long ride</h5><div class="chips"><span class="chip c-z2">Base block</span><span class="chip c-z2">Z2</span></div></div>
+      <p>The lower end of Zone 2, as much volume as you can fit. Cap it at mid Zone 2, or the high end on rides of about an hour. Count the long ride as a hard day.</p>
+    </article>
+
+    <article class="card">
+      <div class="card-head"><h5>Over-unders</h5><div class="chips"><span class="chip c-thr">Intensity block</span><span class="chip c-thr">Threshold</span></div></div>
+      <p>Efforts just above and just below FTP. Absolutely great for raising FTP and training lactate clearance.</p>
+      <a class="watch" href="https://www.youtube.com/watch?v=59VNO0XT3LY" target="_blank" rel="noopener">4 Ways to Increase Threshold Power in 2026</a>
+    </article>
+
+    <article class="card">
+      <div class="card-head"><h5>30-15s</h5><div class="chips"><span class="chip c-thr">Intensity block</span><span class="chip c-vo2">VO2</span></div></div>
+      <p>Pretty good in the intensity block.</p>
+      <a class="watch" href="https://youtu.be/NSzAYj43wK8" target="_blank" rel="noopener">GCN video on 30-15s</a>
+    </article>
+
+    <article class="card">
+      <div class="card-head"><h5>Hard-start sweet spot &amp; threshold</h5><div class="chips"><span class="chip c-thr">Intensity block</span><span class="chip c-tempo">Sweet spot</span></div></div>
+      <p>Start hard to spike lactate and get heart rate into the right zone fast, then hold. Steady sweet spot is more of a maintenance workout.</p>
+    </article>
+
+    <article class="card">
+      <div class="card-head"><h5>2-minute VO2 efforts</h5><div class="chips"><span class="chip c-thr">Intensity block</span><span class="chip c-vo2">VO2</span></div></div>
+      <p>Start with about 2 minutes above threshold, then gradually stretch the duration until that power becomes your new threshold.</p>
+    </article>
+
+    <article class="card">
+      <div class="card-head"><h5>VO2 max progression: 3×3 to 5×5</h5><div class="chips"><span class="chip c-thr">Intensity block</span><span class="chip c-vo2">VO2</span></div></div>
+      <p>Come in recovered and fueled. Add intervals before lengthening them: 3×3, then 5×3, then 4- and 5-minute efforts. When the power fades on longer efforts, finish the set and check you're still reaching about 90% of max heart rate.</p>
+      <a class="watch" href="https://youtu.be/NLYXStPspuc" target="_blank" rel="noopener">Cycling VO2Max Training Progression After Base Training</a>
+    </article>
+
+    <article class="card">
+      <div class="card-head"><h5>Outdoor &amp; group rides</h5><div class="chips"><span class="chip c-thr">Intensity block</span></div></div>
+      <p><strong>The D30 route:</strong> smash the 3–5 minute climbs on weekends, which makes it a VO2 workout. <strong>VV:</strong> a pretty hard ride and a good workout. <strong>Zwift races and Tour of Watopia:</strong> full gas; check time in power and heart-rate zones afterward. <strong>Early Birds:</strong> the Sunday option in the base week.</p>
+    </article>
+  </div>
+
+  <nav class="pager" aria-label="Previous and next section">
+    <a href="#science"><small>Previous</small><span>Science</span></a>
+    <a class="next" href="#videos"><small>Next</small><span>Videos</span></a>
+  </nav>
+</section>
+
+<!-- VIDEOS -->
+<section data-tab="videos" aria-labelledby="h-videos" hidden>
+  <h2 id="h-videos">Reference videos</h2>
+  <p class="intro">Videos worth watching on training and fueling, in the order the guide uses them, each with a short summary. Each one opens on YouTube. Where there's no transcript to go on, the summary says how this guide uses the video instead.</p>
+
+  <div class="vids">
+    <article class="vid">
+      <a class="vid-thumb" href="https://www.youtube.com/watch?v=lc6zYdoGZh4" target="_blank" rel="noopener" style="--chip: var(--z2)" aria-label="Watch The Best Science Backed Short Intensity Workout (to maintain cycling fitness) on YouTube"><span class="vid-topic">Sprints</span><span class="vid-play" aria-hidden="true"></span></a>
+      <div class="vid-body">
+        <h3><a href="https://www.youtube.com/watch?v=lc6zYdoGZh4" target="_blank" rel="noopener">The Best Science Backed Short Intensity Workout (to maintain cycling fitness)</a></h3>
+        <p class="vid-src">Road Cycling Academy · youtube.com</p>
+        <p class="vid-note">The sprint session that keeps your top end through the base block.</p>
+        <p class="vid-label">How this guide uses it</p>
+        <ul class="vid-points">
+          <li>One sprint workout every week of the base block.</li>
+          <li>Short, nearly all-out efforts: 30-second and 1-minute sprints, repeated.</li>
+          <li>An outdoor ride where you smash a few climbs can stand in for it.</li>
+        </ul>
+      </div>
+    </article>
+    <article class="vid">
+      <a class="vid-thumb" href="https://www.youtube.com/watch?v=59VNO0XT3LY" target="_blank" rel="noopener" style="--chip: var(--thr)" aria-label="Watch 4 Ways to Increase Threshold Power in 2026 on YouTube"><span class="vid-topic">Threshold</span><span class="vid-play" aria-hidden="true"></span></a>
+      <div class="vid-body">
+        <h3><a href="https://www.youtube.com/watch?v=59VNO0XT3LY" target="_blank" rel="noopener">4 Ways to Increase Threshold Power in 2026</a></h3>
+        <p class="vid-src">youtube.com</p>
+        <p class="vid-note">Workouts for raising threshold in the intensity block.</p>
+        <p class="vid-label">How this guide uses it</p>
+        <ul class="vid-points">
+          <li>Over-unders, just above and just below FTP, are the core of the intensity block.</li>
+          <li>Hard-start threshold and sweet spot spike lactate early, then teach you to hold the effort.</li>
+          <li>Start with shorter efforts and stretch them across the block.</li>
+        </ul>
+      </div>
+    </article>
+    <article class="vid">
+      <a class="vid-thumb" href="https://youtu.be/NLYXStPspuc" target="_blank" rel="noopener" style="--chip: var(--vo2)" aria-label="Watch Cycling VO2Max Training Progression After Base Training on YouTube"><span class="vid-topic">VO2 max</span><span class="vid-play" aria-hidden="true"></span></a>
+      <div class="vid-body">
+        <h3><a href="https://youtu.be/NLYXStPspuc" target="_blank" rel="noopener">Cycling VO2Max Training Progression After Base Training</a></h3>
+        <p class="vid-src">EVOQ.BIKE · youtube.com</p>
+        <p class="vid-note">How to build VO2 work coming out of base, and why trained riders still do it.</p>
+        <p class="vid-label">Key points</p>
+        <ul class="vid-points">
+          <li>For trained riders, VO2 work is less about remodelling the heart and more about getting used to sustained high power, lactate clearance, plasma volume and the mental side.</li>
+          <li>Come in recovered and fueled. If you can't go hard enough, ride endurance instead.</li>
+          <li>Add intervals before lengthening them: 3×3, then 5×3, then 4- and 5-minute efforts.</li>
+          <li>When the power fades on longer efforts, finish the set and check you still reach about 90% of max heart rate.</li>
+          <li>Ride all the VO2 lengths over a few months, then focus on your weakest. Check your “VO2” sessions are really hard enough.</li>
+        </ul>
+      </div>
+    </article>
+    <article class="vid">
+      <a class="vid-thumb" href="https://youtu.be/NSzAYj43wK8" target="_blank" rel="noopener" style="--chip: var(--vo2)" aria-label="Watch This Training Session Is So Good It Blew My Mind on YouTube"><span class="vid-topic">30-15s</span><span class="vid-play" aria-hidden="true"></span></a>
+      <div class="vid-body">
+        <h3><a href="https://youtu.be/NSzAYj43wK8" target="_blank" rel="noopener">This Training Session Is So Good It Blew My Mind</a></h3>
+        <p class="vid-src">Global Cycling Network · youtube.com</p>
+        <p class="vid-note">30-15 intervals: short efforts with short rests.</p>
+        <p class="vid-label">How this guide uses it</p>
+        <ul class="vid-points">
+          <li>A staple VO2 session for the intensity block.</li>
+          <li>The short rests keep your breathing and heart rate high, so you spend more time near your ceiling than with long rests.</li>
+          <li>In several cyclist studies they raised VO2 max more than 5-minute reps.</li>
+        </ul>
+      </div>
+    </article>
+    <article class="vid">
+      <a class="vid-thumb" href="https://www.youtube.com/watch?v=PV2qXYnVbXw" target="_blank" rel="noopener" style="--chip: var(--tempo)" aria-label="Watch 90 vs 120 vs 150g/h: A New Study on Long-Race Fuelling on YouTube"><span class="vid-topic">Fueling</span><span class="vid-play" aria-hidden="true"></span></a>
+      <div class="vid-body">
+        <h3><a href="https://www.youtube.com/watch?v=PV2qXYnVbXw" target="_blank" rel="noopener">90 vs 120 vs 150g/h: A New Study on Long-Race Fuelling</a></h3>
+        <p class="vid-src">Jesse Coyle · youtube.com</p>
+        <p class="vid-note">The 2026 study on how many carbs per hour to eat on long rides.</p>
+        <p class="vid-label">Key points from the study</p>
+        <ul class="vid-points">
+          <li>8 trained cyclists rode 3 hours at 90, 120 or 150 g/h of carbs, then did a time-to-exhaustion test.</li>
+          <li>Every rider finished at 90 and 120 g/h, and performance held up.</li>
+          <li>Going from 120 to 150 g/h raised carbs actually burned by only about 8 g/h, and performance was worse on average.</li>
+          <li>The best fit was about 107 g/h, with large differences between riders.</li>
+        </ul>
+      </div>
+    </article>
+    <article class="vid">
+      <a class="vid-thumb" href="https://youtu.be/iQX7E9YUEfk" target="_blank" rel="noopener" style="--chip: var(--z2)" aria-label="Watch Mads Pedersen's Coach Reveals His INSANE Training Plan on YouTube"><span class="vid-topic">Pro training</span><span class="vid-play" aria-hidden="true"></span></a>
+      <div class="vid-body">
+        <h3><a href="https://youtu.be/iQX7E9YUEfk" target="_blank" rel="noopener">Mads Pedersen's Coach Reveals His INSANE Training Plan</a></h3>
+        <p class="vid-src">The Roadman Podcast · youtube.com</p>
+        <p class="vid-note">Lidl-Trek coach Mattias Reck on how Mads trains, and what amateurs should take from it. The Zone 2 part is written up on the <a href="#science">Science</a> tab.</p>
+        <p class="vid-label">Key points</p>
+        <ul class="vid-points">
+          <li><strong>Carbs on endurance rides.</strong> People underestimate how many carbs easy riding burns. A smaller engine at 230–240 W for 3 hours doesn't need the 120–140 g/h pros use, and the extra just stresses the stomach.</li>
+          <li><strong>Combine length and intensity.</strong> As your event gets closer, at least one ride a week should be long and include hard efforts, like a hard group ride.</li>
+          <li><strong>Raise the load gradually.</strong> The biggest driver of improvement is doing a bit more: 5×5 becomes 6×5, a 1.5-hour ride becomes 2 hours. The returns get smaller as hours go up, and consistency year after year matters most.</li>
+          <li><strong>Power for intervals, feel for endurance.</strong> With heavy training, heart rate drops (about 10% over the Tour) while power holds, so he sets intervals by power and endurance rides by feel and heart rate.</li>
+          <li><strong>Heat training.</strong> 45–60 minutes on the rollers, fully covered up, done in blocks. It takes about 5–6 weeks to build and fades within about a week of stopping. Easy to overdo; 8 of 10 pros feel it helps.</li>
+          <li><strong>A pro session.</strong> 2 sets of 5 × 3 minutes with 1 minute rest, each starting with 30 seconds hard (550–600 W for Mads) before settling at threshold (450 W).</li>
+        </ul>
+      </div>
+    </article>
+  </div>
+
+  <nav class="pager" aria-label="Previous section">
+    <a href="#workouts"><small>Previous</small><span>Workouts</span></a>
+  </nav>
+</section>
+
+</div>
+</main>
+
+<footer><div class="wrap">Yuankai's Training Guide</div></footer>
+
+<script>
+(function () {
+  var ids = ["start", "rules", "method", "base", "intensity", "fueling", "science", "workouts", "videos"];
+  var sections = document.querySelectorAll("section[data-tab]");
+  var tabs = document.querySelectorAll("nav.tabs a");
+  var first = true;
+  function show() {
+    var id = (location.hash || "").slice(1);
+    if (ids.indexOf(id) === -1) id = "start";
+    sections.forEach(function (s) { s.hidden = s.getAttribute("data-tab") !== id; });
+    tabs.forEach(function (a) {
+      if (a.getAttribute("href") === "#" + id) a.setAttribute("aria-current", "page");
+      else a.removeAttribute("aria-current");
+    });
+    var active = document.querySelector('nav.tabs a[aria-current="page"]');
+    if (active && active.scrollIntoView) {
+      try { active.scrollIntoView({ block: "nearest", inline: "nearest" }); } catch (e) {}
+    }
+    if (!first) {
+      var top = document.querySelector("nav.tabs").offsetTop;
+      if (window.scrollY > top) window.scrollTo(0, top);
+    }
+    first = false;
+  }
+  window.addEventListener("hashchange", show);
+  show();
+
+  var strip = document.querySelector(".tabs-scroll");
+  var prev = document.querySelector(".tab-arrow.prev");
+  var next = document.querySelector(".tab-arrow.next");
+  function arrows() {
+    var max = strip.scrollWidth - strip.clientWidth;
+    prev.hidden = max <= 2 || strip.scrollLeft <= 2;
+    next.hidden = max <= 2 || strip.scrollLeft >= max - 2;
+  }
+  function nudge(dir) { strip.scrollBy({ left: dir * strip.clientWidth * 0.7, behavior: "smooth" }); }
+  prev.addEventListener("click", function () { nudge(-1); });
+  next.addEventListener("click", function () { nudge(1); });
+  strip.addEventListener("scroll", arrows, { passive: true });
+  window.addEventListener("resize", arrows);
+  window.addEventListener("hashchange", function () { setTimeout(arrows, 50); });
+  arrows();
+})();
+</script>
+
+</body></html>
